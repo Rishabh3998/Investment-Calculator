@@ -11,16 +11,16 @@ export function calculateInvestmentResults({
   duration,
 }) {
   const annualData = [];
-  let investmentValue = +initialInvestment;
+  let investmentValue = initialInvestment;
 
-  for (let i = 0; i < +duration; i++) {
-    const interestEarnedInYear = +investmentValue * (+expectedReturn / 100);
-    investmentValue += +interestEarnedInYear + +annualInvestment;
+  for (let i = 0; i < duration; i++) {
+    const interestEarnedInYear = investmentValue * (expectedReturn / 100);
+    investmentValue += interestEarnedInYear + annualInvestment;
     annualData.push({
       year: i + 1, // year identifier
-      interest: +interestEarnedInYear, // the amount of interest earned in this year
-      valueEndOfYear: +investmentValue, // investment value at end of year
-      annualInvestment: +annualInvestment, // investment added in this year
+      interest: interestEarnedInYear, // the amount of interest earned in this year
+      valueEndOfYear: investmentValue, // investment value at end of year
+      annualInvestment: annualInvestment, // investment added in this year
     });
   }
 
@@ -36,17 +36,3 @@ export const formatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });
-
-export const transformResultData = (result) => {
-  return result.map((item, index) => {
-    const total =
-      index > 0 ? item.interest + result[index - 1].interest : item.interest;
-    return {
-      year: item.year,
-      investmentValue: item.valueEndOfYear,
-      interestPerYear: item.interest,
-      totalInterest: total,
-      investedCapital: item.valueEndOfYear - total,
-    };
-  });
-};
