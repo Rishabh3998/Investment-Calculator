@@ -1,13 +1,8 @@
 import { useState } from "react";
+import { calculateInvestmentResults } from "../../util/investment";
+import { INITIAL_INVESTMENT_DATA } from "../../constants";
 
-const INITIAL_INVESTMENT_DATA = {
-  initialInvestment: "",
-  annualInvestment: "",
-  return: "",
-  duration: "",
-};
-
-const InputGroup = () => {
+const InputGroup = ({ stats }) => {
   const [investmentStats, setInvestmentStats] = useState(
     INITIAL_INVESTMENT_DATA
   );
@@ -21,29 +16,45 @@ const InputGroup = () => {
     });
   };
 
-  console.log({ investmentStats });
+  stats(investmentStats);
 
   return (
     <div id="user-input">
       <div className="input-group">
         <div>
           <label>Initial investment</label>
-          <input onChange={(e) => handleChange(e, "initialInvestment")}></input>
+          <input
+            onChange={(e) => handleChange(e, "initialInvestment")}
+            type="number"
+            value={investmentStats?.initialInvestment}
+          ></input>
         </div>
         <div>
           <label>Annual investment</label>
-          <input onChange={(e) => handleChange(e, "annualInvestment")}></input>
+          <input
+            onChange={(e) => handleChange(e, "annualInvestment")}
+            type="number"
+            value={investmentStats?.annualInvestment}
+          ></input>
         </div>
       </div>
       <br />
       <div className="input-group">
         <div>
           <label>Expected return</label>
-          <input onChange={(e) => handleChange(e, "return")}></input>
+          <input
+            onChange={(e) => handleChange(e, "expectedReturn")}
+            type="number"
+            value={investmentStats?.expectedReturn}
+          ></input>
         </div>
         <div>
           <label>Duration</label>
-          <input onChange={(e) => handleChange(e, "duration")}></input>
+          <input
+            onChange={(e) => handleChange(e, "duration")}
+            type="number"
+            value={investmentStats?.duration}
+          ></input>
         </div>
       </div>
     </div>
